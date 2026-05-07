@@ -1,5 +1,7 @@
-service:
+server:
   port: 9020
+  servlet:
+    context-path: /api/v1/users
 
 spring:
   application:
@@ -16,3 +18,5 @@ spring:
     properties:
       hibernate:
         format_sql: true
+jwt:
+  secretKey: mysecret
