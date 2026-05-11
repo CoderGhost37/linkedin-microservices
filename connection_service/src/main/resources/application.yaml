@@ -11,3 +11,9 @@ spring:
   authentication:
     username: neo4j
     password: password
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
