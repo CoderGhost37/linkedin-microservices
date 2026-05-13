@@ -2,7 +2,7 @@ spring:
   application:
     name: api_gateway
   cloud:
-    gateway:
+    gateway.server.webflux:
       routes:
         - id: user_service
           uri: lb://user_service
@@ -16,12 +16,17 @@ spring:
             - Path=/api/v1/posts/**
           filters:
             - StripPrefix=2
+            - name: AuthenticationFilter
         - id: connection_service
           uri: lb://connection_service
           predicates:
             - Path=/api/v1/connections/**
           filters:
             - StripPrefix=2
+            - name: AuthenticationFilter
+
+jwt:
+  secretKey: mysecretkey
 
 eureka:
   client:
