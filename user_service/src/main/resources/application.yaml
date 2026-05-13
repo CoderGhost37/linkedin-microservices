@@ -1,16 +1,16 @@
 server:
   port: 9020
   servlet:
-    context-path: /api/v1/users
+    context-path: /users
 
 spring:
   application:
     name: user_service
   datasource:
     url: jdbc:postgresql://localhost:5432/user-db
-    username:
-    password:
-    driver-class-name: org.postgresql.Driver
+    username: user
+    password: password
+#    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: update

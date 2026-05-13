@@ -1,6 +1,27 @@
 spring:
   application:
     name: api_gateway
+  cloud:
+    gateway:
+      routes:
+        - id: user_service
+          uri: lb://user_service
+          predicates:
+            - Path=/api/v1/users/**
+          filters:
+            - StripPrefix=2
+        - id: post_service
+          uri: lb://post_service
+          predicates:
+            - Path=/api/v1/posts/**
+          filters:
+            - StripPrefix=2
+        - id: connection_service
+          uri: lb://connection_service
+          predicates:
+            - Path=/api/v1/connections/**
+          filters:
+            - StripPrefix=2
 
 eureka:
   client:
