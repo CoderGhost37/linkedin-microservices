@@ -1,4 +1,4 @@
-package com.codingshuttle.linkedInProject.postsService.auth;
+package com.kushagramathur.linkedIn.post_service.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

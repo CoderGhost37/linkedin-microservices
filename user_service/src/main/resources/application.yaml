@@ -19,7 +19,7 @@ spring:
       hibernate:
         format_sql: true
 jwt:
-  secretKey: mysecret
+  secretKey: mysecretkey
 
 eureka:
   client:

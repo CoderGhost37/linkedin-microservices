@@ -1,4 +1,4 @@
-package com.kushagramathur.linkedIn.post_service.auth;
+package com.kushagramathur.linkedIn.connection_service.auth;
 
 public class AuthContextHolder {
 

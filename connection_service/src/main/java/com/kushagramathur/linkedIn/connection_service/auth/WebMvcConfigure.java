@@ -1,5 +1,6 @@
-package com.kushagramathur.linkedIn.post_service.auth;
+package com.kushagramathur.linkedIn.connection_service.auth;
 
+import com.kushagramathur.linkedIn.post_service.auth.RequestInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

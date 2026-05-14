@@ -1,4 +1,4 @@
-package com.kushagramathur.linkedIn.post_service.auth;
+package com.kushagramathur.linkedIn.connection_service.auth;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
