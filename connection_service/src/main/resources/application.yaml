@@ -8,9 +8,9 @@ spring:
     name: connection-service
   neo4j:
     uri: neo4j://127.0.0.1:7687
-  authentication:
-    username: neo4j
-    password: password
+    authentication:
+      username: neo4j
+      password: password
 
 
 eureka:
