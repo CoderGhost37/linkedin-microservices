@@ -4,29 +4,36 @@ spring:
   cloud:
     gateway.server.webflux:
       routes:
-        - id: user_service
-          uri: lb://user_service
+        - id: user-service
+          uri: lb://user-service
           predicates:
             - Path=/api/v1/users/**
           filters:
             - StripPrefix=2
-        - id: post_service
-          uri: lb://post_service
+        - id: post-service
+          uri: lb://post-service
           predicates:
             - Path=/api/v1/posts/**
           filters:
             - StripPrefix=2
             - name: AuthenticationFilter
-        - id: connection_service
-          uri: lb://connection_service
+        - id: connection-service
+          uri: lb://connection-service
           predicates:
             - Path=/api/v1/connections/**
           filters:
             - StripPrefix=2
             - name: AuthenticationFilter
+        - id: notification-service
+          uri: lb://notification-service
+          predicates:
+            - Path=/api/v1/notifications/**
+          filters:
+            - StripPrefix=2
+            - name: AuthenticationFilter
 
 jwt:
-  secretKey: mysecretkey
+  secretKey: td2lR4BTX1HsqUm/JsCVf5Os5Q7hJfl9j5Iy7rEB33k=
 
 eureka:
   client:

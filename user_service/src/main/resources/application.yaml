@@ -5,7 +5,7 @@ server:
 
 spring:
   application:
-    name: user_service
+    name: user-service
   datasource:
     url: jdbc:postgresql://localhost:5432/user-db
     username: user
@@ -19,7 +19,7 @@ spring:
       hibernate:
         format_sql: true
 jwt:
-  secretKey: mysecretkey
+  secretKey: td2lR4BTX1HsqUm/JsCVf5Os5Q7hJfl9j5Iy7rEB33k=
 
 eureka:
   client:
