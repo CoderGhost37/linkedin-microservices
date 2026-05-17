@@ -1,7 +1,9 @@
 package com.kushagramathur.linkedIn.post_service.service;
 
+import com.kushagramathur.linkedIn.post_service.auth.AuthContextHolder;
 import com.kushagramathur.linkedIn.post_service.entity.Post;
 import com.kushagramathur.linkedIn.post_service.entity.PostLike;
+import com.kushagramathur.linkedIn.post_service.event.PostLiked;
 import com.kushagramathur.linkedIn.post_service.exception.BadRequestException;
 import com.kushagramathur.linkedIn.post_service.repository.PostLikeRepository;
 import com.kushagramathur.linkedIn.post_service.repository.PostRepository;
@@ -9,6 +11,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,12 +21,13 @@ public class PostLikeService {
 
     private final PostLikeRepository postLikeRepository;
     private final PostRepository postRepository;
-    private final ModelMapper modelMapper;
+    private final KafkaTemplate<Long, PostLiked> postLikedKafkaTemplate;
 
-    public void likePost(Long postId, Long userId) {
+    public void likePost(Long postId) {
+        Long userId = AuthContextHolder.getCurrentUserId();
         log.info("User {} is liking post {}", userId, postId);
 
-        postRepository.findById(postId)
+        Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new RuntimeException("Post not found with ID: " + postId));
 
         boolean hasAlreadyLiked = postLikeRepository.existsByPostIdAndUserId(postId, userId);
@@ -36,11 +40,17 @@ public class PostLikeService {
         postLike.setUserId(userId);
         postLikeRepository.save(postLike);
 
-        // TODO: Send notification to post owner about the new like
+        PostLiked postLikedEvent = PostLiked.builder()
+                .postId(postId)
+                .likedByUserId(userId)
+                .ownerUserId(post.getUserId())
+                .build();
+        postLikedKafkaTemplate.send("post_liked_topic", postLikedEvent);
     }
 
     @Transactional
-    public void unlikePost(Long postId, Long userId) {
+    public void unlikePost(Long postId) {
+        Long userId = AuthContextHolder.getCurrentUserId();
         log.info("User {} is unliking post {}", userId, postId);
 
         postRepository.findById(postId)

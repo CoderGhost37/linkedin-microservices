@@ -18,7 +18,7 @@ public class PostController {
 
     @PostMapping
     public ResponseEntity<PostDto> createPost(@RequestBody PostCreateRequestDto postCreateRequestDto) {
-        PostDto postDto = postService.createPost(postCreateRequestDto, 1L);
+        PostDto postDto = postService.createPost(postCreateRequestDto);
         return ResponseEntity.ok(postDto);
     }
 

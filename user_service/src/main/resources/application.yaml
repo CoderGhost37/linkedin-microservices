@@ -18,6 +18,16 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: ${spring.application.name}
+      key-deserializer: org.apache.kafka.common.serialization.LongDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json:
+          trusted.packages: com.kushagramathur.linkedIn.*
+
 jwt:
   secretKey: td2lR4BTX1HsqUm/JsCVf5Os5Q7hJfl9j5Iy7rEB33k=
 
