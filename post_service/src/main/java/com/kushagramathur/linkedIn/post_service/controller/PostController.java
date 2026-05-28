@@ -4,6 +4,7 @@ import com.kushagramathur.linkedIn.post_service.dto.PostCreateRequestDto;
 import com.kushagramathur.linkedIn.post_service.dto.PostDto;
 import com.kushagramathur.linkedIn.post_service.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +17,7 @@ public class PostController {
 
     private final PostService postService;
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<PostDto> createPost(@RequestBody PostCreateRequestDto postCreateRequestDto) {
         PostDto postDto = postService.createPost(postCreateRequestDto);
         return ResponseEntity.ok(postDto);

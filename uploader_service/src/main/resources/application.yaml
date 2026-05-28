@@ -10,7 +10,7 @@ spring:
 cloudinary:
   cloud-name:
   api-key:
-  api-secret: 
+  api-secret:
 
 gcloud:
   storage-bucket-name: linked-in-project-assets

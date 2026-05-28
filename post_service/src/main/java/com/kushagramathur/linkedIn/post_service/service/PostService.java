@@ -2,6 +2,7 @@ package com.kushagramathur.linkedIn.post_service.service;
 
 import com.kushagramathur.linkedIn.post_service.auth.AuthContextHolder;
 import com.kushagramathur.linkedIn.post_service.client.ConnectionsServiceClient;
+import com.kushagramathur.linkedIn.post_service.client.UploaderServiceClient;
 import com.kushagramathur.linkedIn.post_service.dto.PersonDto;
 import com.kushagramathur.linkedIn.post_service.dto.PostCreateRequestDto;
 import com.kushagramathur.linkedIn.post_service.dto.PostDto;
@@ -12,6 +13,7 @@ import com.kushagramathur.linkedIn.post_service.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
@@ -26,14 +28,18 @@ public class PostService {
     private final ModelMapper modelMapper;
     private final KafkaTemplate<Long, PostCreated> postCreatedKafkaTemplate;
     private final ConnectionsServiceClient connectionsServiceClient;
+    private final UploaderServiceClient uploaderServiceClient;
 
     public PostDto createPost(PostCreateRequestDto postCreateRequestDto) {
         log.info("Creating post with content: {}", postCreateRequestDto.getContent());
 
         Long userId = AuthContextHolder.getCurrentUserId();
 
+        ResponseEntity<String> imageUrl = uploaderServiceClient.uploadFile(postCreateRequestDto.getFile());
+
         Post post = modelMapper.map(postCreateRequestDto, Post.class);
         post.setUserId(userId);
+        post.setImageUrl(imageUrl.getBody());
         post = postRepository.save(post);
 
         List<PersonDto> personDtoList = connectionsServiceClient.getFirstDegreeConnections(userId);
