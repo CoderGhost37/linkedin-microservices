@@ -5,29 +5,22 @@ spring:
     gateway.server.webflux:
       routes:
         - id: user-service
-          uri: lb://user-service
+          uri: ${USER_SERVICE_URI:lb://user-service}
           predicates:
             - Path=/api/v1/users/**
           filters:
             - StripPrefix=2
         - id: post-service
-          uri: lb://post-service
+          uri: ${POST_SERVICE_URI:lb://post-service}
           predicates:
             - Path=/api/v1/posts/**
           filters:
             - StripPrefix=2
             - name: AuthenticationFilter
         - id: connection-service
-          uri: lb://connection-service
+          uri: ${CONNECTION_SERVICE_URI:lb://connection-service}
           predicates:
             - Path=/api/v1/connections/**
-          filters:
-            - StripPrefix=2
-            - name: AuthenticationFilter
-        - id: notification-service
-          uri: lb://notification-service
-          predicates:
-            - Path=/api/v1/notifications/**
           filters:
             - StripPrefix=2
             - name: AuthenticationFilter
